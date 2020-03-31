@@ -2,9 +2,10 @@ package com.kafka.demo.springbootkafka.controller;
 
 import com.kafka.demo.springbootkafka.kafka.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +20,8 @@ public class KafkaController {
     }
 
     @PostMapping(value = "/publish")
-    public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
+    public ResponseEntity<String> sendMessageToKafkaTopic(@RequestBody String message) {
         this.producerService.sendMessage(message);
+        return ResponseEntity.ok("Message received: " + message);
     }
 }
